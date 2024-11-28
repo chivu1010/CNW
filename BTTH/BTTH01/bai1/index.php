@@ -1,25 +1,44 @@
 <?php
-include 'data.php';
+require 'flowers.php';
+session_start();
+
+if (isset($_SESSION['flowers']) && !empty($_SESSION['flowers']))
+    $flowers = $_SESSION['flowers'];
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách các loài hoa</title>
-    <link rel="stylesheet" href="style.css">
+    <title>THẾ GIỚI HOA</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
 </head>
+
 <body>
-    <h1>Danh sách các loài hoa</h1>
-    <div class="flower-list">
-        <?php foreach ($flowers as $flower): ?>
-            <div class="flower-item">
-                <h2><?php echo $flower['name']; ?></h2>
-                <p><?php echo $flower['description']; ?></p>
-                <img src="<?php echo $flower['image']; ?>" alt="<?php echo $flower['name']; ?>">
-            </div>
-        <?php endforeach; ?>
+    <?php include 'header.php'; ?>
+
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Danh Sách Các Loài Hoa</h1>
+        <div class="row">
+            <?php foreach ($flowers as $index => $flower) : ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="<?php echo $flower['image']; ?>" class="card-img-top" alt="<?php echo $flower['name']; ?>" onerror="this.src='./images/default.jpg'">
+                        <div class="card-body">
+                            <!-- Thêm số thứ tự vào tên hoa -->
+                            <h5 class="card-title"><?php echo ($index + 1) . '. ' . $flower['name']; ?></h5>
+                            <p class="card-text"><?php echo $flower['description']; ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
